@@ -8,8 +8,8 @@
 <p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/logo.png"/></p>
 
 ## The goal of this mini project is to achieve:
-  1. A connected object based on the "ESP" microcontroller integrated circuit, equipped with a temperature sensor and an alphanumeric display.
-  2. Display the data measured by the connected object on a Web type HMI and/or Mobile.
+  1. A connected object based on the "ESP" microcontroller integrated circuit, equipped with a temperature/humidity sensor and an alphanumeric display.
+  2. Display the data measured by the temperature/humidity sensor on a Web type HMI and/or Mobile.
 
 ## Table of Contents 
 * **Methodology**
@@ -17,7 +17,7 @@
 * **Architecture**
 * **Simulation code with wokiwi**
 * **Mobile application**
-* **How Run the Project**
+* **Running the project**
 * **Demo**
 
 ## Methodology
@@ -26,8 +26,8 @@ A simulation, via the simulation platform [wokiwi](https://wokwi.com/)
 The software part consists of developing an MQTT client, which is mainly a
 web and/or mobile application, to receive and display the data measured by the object
 connected.
-The method of communication between the application and the connected object is messaging
-MQTT (in TCP). The **broker** (MQTT server) to use is HiveMQ. This public broker
+The method of communicating between the application and the sensor is via
+MQTT (in TCP). The **broker** (MQTT server) in question is HiveMQ. This public broker
 is free and its access details are available on its official page:
 [HiveMQ](https://www.hivemq.com/public-mqtt-broker/)
 
@@ -45,9 +45,9 @@ is free and its access details are available on its official page:
 - Topic: topic_sensor_temperature and topic_sensor_humidity
 - QoS: 0
 - Click on 'Subscribe'
-Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)'s publish on 'Messages'
+Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)'s values in the 'Messages' section
 <p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/topics.jpg"/></p>
-### Simulation's code
+### Simulation code
 
 ```c
 #include <LiquidCrystal_I2C.h>
@@ -221,7 +221,7 @@ npm install paho-mqtt --save
 
 #### Usage
 
-To use the library just pass in the options for the local storage module ([react-native-storage](https://github.com/sunnylqm/react-native-storage)) and the paho object will be attached to global scope.
+To use the library just pass in the options for the local storage module ([react-native-storage](https://github.com/sunnylqm/react-native-storage)) and the paho object will be attached to the global scope.
 ```javascript
 import { useState, useEffect } from "react";
 import Paho from 'paho-mqtt';
@@ -296,7 +296,7 @@ react-native-weather is a React Native Aplication built with EXPO. The applicati
 
 Generate API_KEY
 
-- Create an account at the [website](https://openweathermap.org/).
+- Create an account in the [website](https://openweathermap.org/).
 - Get your API KEY by email.
 - Create `.env` file on the project root and insert yout key like this: `API_KEY=<open_weather_map_api_key>`
 
