@@ -220,7 +220,7 @@ const ProfileScreen = ({ navigation }) => {
         >
         <BottomSheet
           ref={bs}
-          snapPoints={[330, 0]}
+          snapPoints={[220, 0]}
           renderContent={renderInner}
           renderHeader={renderHeader}
           initialSnap={1}
@@ -425,6 +425,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     width: "100%",
+    color:"#FFFFFF"
   },
   button: {
     display: "flex",
@@ -466,6 +467,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   panelTitle: {
+    marginBottom:10,
     fontSize: 27,
     height: 35,
   },
@@ -492,6 +494,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
     width:"100%",
+    height:"100%"
   },
 
 });
