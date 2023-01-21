@@ -2,9 +2,8 @@
 # TermoFlame
 
 ## The goal of this mini project is to achieve:
-    1. A connected object based on the "ESP" microcontroller integrated circuit, equipped a temperature sensor and an alphanumeric display.
-    2. Display the data measured by the connected object on a Web type HMI and/or
-    Mobile.
+  1. A connected object based on the "ESP" microcontroller integrated circuit, equipped a temperature sensor and an alphanumeric display.
+  2. Display the data measured by the connected object on a Web type HMI and/or Mobile.
 
 ## Table of Contents 
 * **Methodology**
@@ -38,10 +37,11 @@ is free and its access details are available on its official page:
 - Click on 'Connect
 ![Broker](https://github.com/zeineuub/termoflame/blob/master/images/broker.jpg)
 ### Subscriptions - Add new Topic fot Temperature and Humidity
-- Topic: topic_sensor_temperature and topic_sensor_
+- Topic: topic_sensor_temperature and topic_sensor_humidity
 - QoS: 0
 - Click on 'Subscribe'
 Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)'s publish on 'Messages'
+
 ![Topics](https://github.com/zeineuub/termoflame/blob/master/images/topics.jpg)
 
 ### Simulation's code
