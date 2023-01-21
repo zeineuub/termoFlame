@@ -5,7 +5,7 @@
 ![version](https://badgen.net/badge/github/1.0.0/red?icon=github)
 
 # TermoFlame
-<p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/termoflame.png"/></p>
+<p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/logo.png"/></p>
 
 ## The goal of this mini project is to achieve:
   1. A connected object based on the "ESP" microcontroller integrated circuit, equipped a temperature sensor and an alphanumeric display.
