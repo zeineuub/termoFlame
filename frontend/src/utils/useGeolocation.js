@@ -16,6 +16,7 @@ export default function useGeoLocation() {
       setLocation([Object.values(position.coords)[3], Object.values(position.coords)[5]]);
 
     })();
+
   }, []);
   return location;
 }

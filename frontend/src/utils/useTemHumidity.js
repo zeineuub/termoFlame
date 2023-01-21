@@ -1,23 +1,12 @@
 import { useState, useEffect } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useIsFocused } from "@react-navigation/native";
-import init from 'react_native_mqtt';
-init({
-  size: 10000,
-  storageBackend: AsyncStorage,
-  defaultExpires: 1000 * 3600 * 24,
-  enableCache: true,
-  reconnect: true,
-  sync : {}
-});
+import Paho from 'paho-mqtt';
+var client;
 
 export default function useTempHumidity() {
-    const [temp, setTemp] = useState("");
+    const [temp, setTemp] = useState(0);
     const topicTempName = "topic_sensor_temperature";
-    const [humidity, setHumidity]= useState("");
+    const [humidity, setHumidity]= useState(0);
     const topicHumiditypName = "topic_sensor_humidity";
-    const isFocused = useIsFocused();
-    const mqttHost = 'broker.mqttdashboard.com';
 
 
   // called when the client connects
@@ -31,40 +20,42 @@ export default function useTempHumidity() {
   // called when the client loses its connection
   const onConnectionLost = (responseObject) =>{
     if (responseObject.errorCode !== 0) {
-        console.log("onConnectionLost:" + responseObject.errorMessage);
+      console.log("onConnectionLost:" + responseObject.errorMessage);
     }
+  
   }
-  // call when a message arrive in the broker
+  // called when message arrives in the broker
   const onMessageArrived = (message)=>{  
-    // get the temperature value
     if (message.destinationName == topicTempName ){
       setTemp(parseFloat(message.payloadString));
-      console.log(temp);
+      console.log("temperature = ",temp);
   
     }
-    // get the humidity value
     if (message.destinationName == topicHumiditypName ){
       setHumidity(parseFloat(message.payloadString));
-      console.log(humidity);
+      console.log("humidity = ",humidity);
     }
   
-  }
-  // MQTT connection
+    }
   const MQTTconnect =() =>{
+    const mqttHost = 'broker.mqttdashboard.com';
 
-    const client = new Paho.MQTT.Client(mqttHost, 8000, "clientId");
+    client = new Paho.Client(mqttHost, Number(8000), "clientId-K21BhVDJCD");
     // set callback handlers
-    client.onMessageArrived = onMessageArrived;
-    client.connect({ onSuccess:onConnect, useSSL: false });
     client.onConnectionLost = onConnectionLost;
-
+    client.connect({ onSuccess: onConnect});
+    client.onMessageArrived = onMessageArrived;
+  
+    // connect the client
   }
 
   useEffect(() => {
     MQTTconnect();
-  }, [isFocused]);
-
-  
+    return () => {
+      setTemp(0);
+      setHumidity(0) // This worked for me
+    };
+  }, []);
 
   return {temp, humidity};
 }

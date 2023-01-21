@@ -8,6 +8,7 @@ import useTemHumidity from "../utils/useTemHumidity";
 const WeatherScreen = ({ navigation }) => {
   const weather = useWeather();
   const tempHumidity = useTemHumidity();
+  
   return (
 
     <Container>

@@ -109,7 +109,7 @@ const ProfileScreen = ({ navigation }) => {
             } catch (err) {
               console.log(err);
             }
-            showToast("Le compte à été mise à jour");
+            showToast(i18n.t('toast.updateAccount'));
           }
         } catch (err) {
           console.log(err);
@@ -120,34 +120,6 @@ const ProfileScreen = ({ navigation }) => {
       });
   };
 
-  const showImagePicker = async () => {
-    // Ask the user for the permission to access the media library
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your photos!");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      base64: true,
-      allowsEditing: false,
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      quality: 0.1,
-    });
-
-    // Explore the result
-
-    if (!result.cancelled) {
-      let uri = result.uri;
-      let mime = uri.substring(uri.lastIndexOf(".") + 1);
-      const image = {
-        data: result.base64,
-        mime,
-      };
-    }
-  };
   useEffect(() => {
     const init = async()=>{
       i18n.fallbacks = true;
@@ -156,6 +128,7 @@ const ProfileScreen = ({ navigation }) => {
         const language = await AsyncStorage.getItem("user-language");
         i18n.locale = language;
         const token = await AsyncStorage.getItem("accessToken");
+        console.log(accessToken)
         await onLoggedIn(token);
         setToken(token);
       } catch (e) {
@@ -196,7 +169,7 @@ const ProfileScreen = ({ navigation }) => {
               style={styles.backgroundImage}
               source={require("../assets/images/up-user-details-background.84295f2e.jpg")}
             />
-            <TouchableOpacity onPress={showImagePicker}>
+            <TouchableOpacity onPress={()=>{}}>
               <Image  source={require("../assets/images/avatar.png")} style={styles.avatar} />
               <View
                 style={{

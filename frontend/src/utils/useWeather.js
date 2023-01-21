@@ -15,10 +15,9 @@ export default function useWeather() {
   const [weather, setWeather] = useState(null);
 
   const latLon = useGeoLocation();
-  useEffect(() => {
-    if (latLon) {
-      fetchAPI(...latLon);
-    }
+  useEffect(async() => {
+    await fetchAPI(...latLon);
+   
   }, [latLon]);
 
   const fetchAPI = async (lat, lon) => {

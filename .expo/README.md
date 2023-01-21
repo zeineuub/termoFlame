@@ -53,8 +53,8 @@ Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)
 #include <PubSubClient.h>
 
 //define the 2 topics to subscribe to
-#define TOPIC_PUBLISH_TEMPERATURE "topic_sensor_temperature"
-#define TOPIC_PUBLISH_HUMIDITY    "topic_sensor_humidity"
+#define TOPIC_PUBLISH_TEMPERATURE "termofalme/temperature"
+#define TOPIC_PUBLISH_HUMIDITY    "termofalme/humidity"
 
 //define the delay between publishes
 #define PUBLISH_DELAY 1000  

@@ -85,6 +85,7 @@ function App() {
       signIn: async (token) => {
         const userToken = token;
         try {
+          console.log(token)
           await AsyncStorage.setItem("accessToken", userToken);
         } catch (e) {
           console.log(e);

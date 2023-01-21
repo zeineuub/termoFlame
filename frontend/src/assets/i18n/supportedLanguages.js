@@ -1,7 +1,7 @@
 const en = {
   form: {
     firstName: "FirstName",
-    lastName: "Name",
+    lastName: "LastName",
     phoneNumber: "Phone Number",
     email: "Email address",
     signIn:"Connect",
@@ -19,6 +19,9 @@ const en = {
     enterLP: "Enter license plate",
     infoMessageForgetPassword:
       "No problem, send us your email and we'll send you a recovery email",
+  },
+  toast:{
+    updateAccount:"The account has been updated",
   },
   buttons: {
     save: "Save",
@@ -102,6 +105,9 @@ const fr = {
     more:"Encore",
     fr:"Français",
     en:"Anglais"
+  },
+  toast:{
+    updateAccount:"Le compte à été mise à jour"
   },
   weather:{
     welcome: "Bienvenue",

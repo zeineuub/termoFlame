@@ -78,6 +78,7 @@ const SignInScreen = ({ navigation }) => {
       .then(async (res) => {
         try {
           const jsonRes = await res.json();
+          console.log(jsonRes)
           if (res.status !== 200) {
             const { message } = jsonRes.errors[0];
             setIsError(true);
@@ -85,7 +86,7 @@ const SignInScreen = ({ navigation }) => {
             setIsLoading(false);
           } else {
             try {
-              console.log(jsonRes)
+              console.log(jsonRes);
               await onLoggedIn(jsonRes.accessToken);
               if (jsonRes.role == "client" || jsonRes.role == "admin") {
                 signIn(jsonRes.accessToken);
