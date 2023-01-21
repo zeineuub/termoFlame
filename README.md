@@ -46,9 +46,7 @@ is free and its access details are available on its official page:
 - QoS: 0
 - Click on 'Subscribe'
 Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)'s publish on 'Messages'
-
-![Topics](https://github.com/zeineuub/termoflame/blob/master/images/topics.jpg)
-
+<p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/topics.jpg"/></p>
 ### Simulation's code
 
 ```c
@@ -317,6 +315,6 @@ npm start
 ```
 ### Demo
 
-<p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/videos/demo2.gif"/></p>
+![demo](https://github.com/zeineuub/termoflame/blob/master/videos/demo2.gif)
 
 
