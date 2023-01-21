@@ -204,16 +204,13 @@ void loop() {
 
 ```
 ## Mobile Application
-### React Native Mqtt
-
-This package is a wrapper around the javascript implementation of the [paho mqtt client library](https://eclipse.org/paho/clients/js/) to provide drop in compatibility with react native. If you happen to be running your own mqtt broker, it must support websockets for a connection to be possible.
 
 ### Install
 
 To install, use npm:
 
 ```
-npm install react_native_mqtt --save
+npm install paho-mqtt --save
 ```
 ### Usage
 
