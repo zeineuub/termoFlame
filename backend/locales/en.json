@@ -33,15 +33,12 @@
 				"invalid_password": "Invalid Password"
 			}
 		},
-		"authenticate": {
-			"invalid_credentials": "Login parameters are incorrect"
-		},
 		"text": {
 			"message": "is your activation code for the %s application"
 		},
 		"user_not_found": "User not found",
 		"authentication": {
-			"invalid_credentials": "user.authentication.invalid_credentials"
+			"invalid_credentials": "Login parameters are incorrect"
 		}
 	},
 	"vehicle": {

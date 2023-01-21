@@ -3,7 +3,7 @@ import * as Location from 'expo-location';
 export default function useGeoLocation() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  useEffect(async() => {
+  useEffect(() => {
     (async () => {
       
       let { status } = await Location.requestForegroundPermissionsAsync();

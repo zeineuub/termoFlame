@@ -165,7 +165,6 @@ module.exports.checkIfUserExist = async ({ email }) => {
  * @returns { data: { accessToken } }
  */
 module.exports.authenticate = async ({ email, password }) => {
-  console.log("here")
     const user = await User.findOne({ email });
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new AuthenticationError(
