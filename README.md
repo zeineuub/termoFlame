@@ -18,8 +18,7 @@
 * **Simulation code with wokiwi**
 * **Mobile application**
 * **How Run the Project**
-
-
+* **Demo**
 
 ## Methodology
 A simulation, via the simulation platform [wokiwi](https://wokwi.com/)
@@ -211,14 +210,18 @@ void loop() {
 ```
 ## Mobile Application
 
-### Install
+### Install Dependencies
 
-To install, use npm:
+```
+npm install
+```
+### Install paho-mqtt
 
 ```
 npm install paho-mqtt --save
 ```
-### Usage
+
+#### Usage
 
 To use the library just pass in the options for the local storage module ([react-native-storage](https://github.com/sunnylqm/react-native-storage)) and the paho object will be attached to global scope.
 ```javascript
@@ -284,5 +287,32 @@ export default function useTempHumidity() {
   return {temp, humidity};
 }
 
+```
+### react-native-weather
+
+#### About
+
+react-native-weather is a React Native Aplication built with EXPO. The application shows the forecast for the next 7 days and utilizes the Open Weather Maps to fetch data. The data is stored in cache in order to still be available in case of offline mode.
+
+#### Open Weather Map API
+
+Generate API_KEY
+
+- Create an account at the [website](https://openweathermap.org/).
+- Get your API KEY by email.
+- Create `.env` file on the project root and insert yout key like this: `API_KEY=<open_weather_map_api_key>`
+
+
+## How Run the Project
+### Frontend part
+```
+cd frontend
+expo start
+```
+
+### Backend part
+```
+cd backend
+npm start
 ```
 
