@@ -24,8 +24,7 @@
 A simulation, via the simulation platform [wokiwi](https://wokwi.com/)
 ## Software part
 The software part consists of developing an MQTT client, which is mainly a
-web and/or mobile application, to receive and display the data measured by the object
-connected.
+web and/or mobile application, to receive and display the data measured by the sensor.
 The method of communicating between the application and the sensor is via
 MQTT (in TCP). The **broker** (MQTT server) in question is HiveMQ. This public broker
 is free and its access details are available on its official page:
@@ -301,7 +300,7 @@ Generate API_KEY
 - Create `.env` file on the project root and insert yout key like this: `API_KEY=<open_weather_map_api_key>`
 
 
-## How Run the Project
+## Running the project
 ### Frontend part
 ```
 cd frontend
