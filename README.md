@@ -317,7 +317,6 @@ npm start
 ```
 ### Demo
 
-![demo](f)
-<p align="center"> <img src="[https://github.com/zeineuub/termoflame/blob/master/videos/demo2.gif"/></p>
+<p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/videos/demo2.gif"/></p>
 
 
