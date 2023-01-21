@@ -13,11 +13,15 @@ import {
   RefreshControl,
 } from "react-native";
 import { useFonts } from "expo-font";
+import BottomSheet from "reanimated-bottom-sheet";
+import Animated from "react-native-reanimated";
+import IonIcon from "react-native-vector-icons/Ionicons";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AnimatedLoader from "react-native-animated-loader";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-const API_URL = "https://192.168.1.23:3000/api/v1";
+const API_URL = "http://192.168.1.23:3000/api/v1";
 import * as Localization from "expo-localization";
 import { useIsFocused } from '@react-navigation/native';
 import i18n from "i18n-js";
@@ -26,32 +30,33 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 const ProfileScreen = ({ navigation }) => {
-  i18n.fallbacks = true;
-  i18n.translations = { en,fr };
-  i18n.locale = Localization.locale;
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("false");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [language, setLanguage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   // This hook returns `true` if the screen is focused, `false` otherwise
   const isFocused = useIsFocused();
-  const [image, setImage] = useState(
-    "https://imagevars.gulfnews.com/2021/03/03/Stock-Smartphone_177f82cc942_large.jpg"
-  );
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.LONG, ToastAndroid.TOP);
   };
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(async() => {
     setRefreshing(true);
+   const lang = await AsyncStorage.getItem("user-language");
+
+    i18n.locale = lang;
     onLoggedIn(token);
     wait(1000).then(() => setRefreshing(false));
   }, []);
+  const updateLanguage = async (lang) => {
+    setLanguage(lang);
+
+  };
   const onLoggedIn = async (token) => {
     await fetch(`${API_URL}/auth/me`, {
       method: "GET",
@@ -70,6 +75,7 @@ const ProfileScreen = ({ navigation }) => {
               email: jsonRes.email,
               phoneNumber: jsonRes.phoneNumber,
               id: jsonRes.id,
+              language:jsonRes.language
             };
             setUser(user);
           }
@@ -87,6 +93,7 @@ const ProfileScreen = ({ navigation }) => {
       firstName: firstName ? firstName : user.firstName,
       lastName: lastName ? lastName : user.lastName,
       phoneNumber: phoneNumber ? phoneNumber : user.phoneNumber,
+      language: language ? language: user.language,
     };
     await fetch(`${API_URL}/user/`, {
       method: "PUT",
@@ -104,12 +111,19 @@ const ProfileScreen = ({ navigation }) => {
             showToast(message);
           } else {
             setUser(jsonRes.user);
-            try {
-              await AsyncStorage.setItem("user", user);
-            } catch (err) {
-              console.log(err);
-            }
+            await AsyncStorage.setItem(
+              "name",
+              user.firstName + " " + user.lastName
+            );
+            setLanguage(user.language);
+            await AsyncStorage.setItem("user-language", user.language);
+            i18n.locale = user.language;
             showToast(i18n.t('toast.updateAccount'));
+            setTimeout(() => {
+              onRefresh()
+            }, 1000)
+            
+
           }
         } catch (err) {
           console.log(err);
@@ -119,7 +133,44 @@ const ProfileScreen = ({ navigation }) => {
         console.log(err);
       });
   };
+  const renderInner = () => (
+    <View style={styles.panel}>
+      <View style={{ alignItems: "center" }}>
+        <Text style={styles.panelTitle}>{i18n.t("settings.language")}</Text>
+        <Text style={styles.panelSubtitle}>
+          {i18n.t("settings.languageSub")}
+        </Text>
+      </View>
+      <TouchableOpacity
+        style={{ flex: 0, flexDirection: "row" }}
+        onPress={() => updateLanguage("fr")}
+      >
+        <Image
+          source={require("../assets/images/france.png")}
+          style={styles.flag}
+        />
+        <Text style={styles.panelButtonTitle}>{i18n.t("header.fr")}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ flex: 0, flexDirection: "row" }}
+        onPress={() => updateLanguage("en")}
+      >
+        <Image
+          source={require("../assets/images/united-kingdom.png")}
+          style={styles.flag}
+        />
+        <Text style={styles.panelButtonTitle}>{i18n.t("header.en")}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
+  const renderHeader = () => (
+    <View style={styles.headerpanel}>
+      <View style={styles.panelHeader}>
+        <View style={styles.panelHandle} />
+      </View>
+    </View>
+  );
   useEffect(() => {
     const init = async()=>{
       i18n.fallbacks = true;
@@ -128,7 +179,6 @@ const ProfileScreen = ({ navigation }) => {
         const language = await AsyncStorage.getItem("user-language");
         i18n.locale = language;
         const token = await AsyncStorage.getItem("accessToken");
-        console.log(accessToken)
         await onLoggedIn(token);
         setToken(token);
       } catch (e) {
@@ -143,27 +193,40 @@ const ProfileScreen = ({ navigation }) => {
     "Poppins-Medium": require("../../assets/fonts/Poppins-Medium.otf"),
     "Poppins-SemiBold": require("../../assets/fonts/Poppins-SemiBold.otf"),
     "Poppins-Bold": require("../../assets/fonts/Poppins-Bold.otf"),
+    "Poppins-Light": require("../../assets/fonts/Poppins-Light.otf"),
+
   });
 
   if (!loaded) {
     return null;
   }
+  const bs = React.createRef();
+  const fall = new Animated.Value(1);
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "white" }}
-      behavior="heigth"
+    style={{ flex: 1, backgroundColor: "white" }}
+    behavior="heigth"
+  >
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
         <SafeAreaView
           style={{
             flex: 1,
             alignItems: "center",
           }}
         >
+        <BottomSheet
+          ref={bs}
+          snapPoints={[330, 0]}
+          renderContent={renderInner}
+          renderHeader={renderHeader}
+          initialSnap={1}
+          callbackNode={fall}
+          enabledGestureInteraction={true}
+        />
           <View style={styles.header}>
             <Image
               style={styles.backgroundImage}
@@ -230,6 +293,35 @@ const ProfileScreen = ({ navigation }) => {
                 keyboardType="phone-pad"
                 onChangeText={setPhoneNumber}
               />
+             <View style={styles.containerPanel}>
+            <IonIcon color={"#4A4A4A"} size={25} name={"language-outline"} />
+            <Text style={styles.textPanel}>{i18n.t("settings.language")} </Text>
+            <View
+              style={{
+                backgroundColor: "#F5F6FB",
+                left: 270,
+                borderRadius: 15,
+                position: "absolute",
+                paddingTop:5
+              }}
+            >
+              <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+                <Text
+                  style={{
+                    color: "#666671",
+                    width: 50,
+                    height: 30,
+                    fontFamily: "Poppins-Light",
+                    fontSize: 16,
+                    textAlign: "center",
+                    
+                  }}
+                >
+                  {language == "fr" ? "fr" : "en"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
               <LinearGradient
                 colors={["#F16694", "#F16072", "#F69252"]}
                 start={{ x: 0, y: 0 }}
@@ -255,8 +347,9 @@ const ProfileScreen = ({ navigation }) => {
             />
           </View>
         </SafeAreaView>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+        </KeyboardAvoidingView>
+
   );
 };
 export default ProfileScreen;
@@ -271,14 +364,39 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
   },
+  headerpanel: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#333333',
+    shadowOffset: {width: -1, height: -3},
+    shadowRadius: 2,
+    shadowOpacity: 0.5,
+    elevation: 5,
+    paddingTop: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
   header: {
     width: "100%",
     height: 220,
+  },
+  flag: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 15,
+    width: 27,
+    height: 27,
   },
   backgroundImage: {
     resizeMode: "stretch",
     height: 200,
     width: "100%",
+  },
+  containerPanel: {
+    flex: 0,
+    flexDirection: "row",
+    marginBottom: 30,
+    marginTop:15,
+    marginLeft:-200 
   },
   text: {
     width: 250,
@@ -288,6 +406,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFFFFF",
   },
+  textPanel: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 15,
+    color: "#4A4A4A",
+    left:5,
+    top:3
+  },
   input: {
     height: 40,
     margin: 12,
@@ -295,6 +420,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "#e9ecef",
     borderRadius: 20,
+    fontFamily: "Poppins-Regular",
     borderStyle: "solid",
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -352,35 +478,20 @@ const styles = StyleSheet.create({
   panelButton: {
     padding: 13,
     borderRadius: 10,
-    backgroundColor: "rgb(241, 96, 114)",
+    backgroundColor: "#FF6347",
     alignItems: "center",
     marginVertical: 7,
   },
   panelButtonTitle: {
     fontSize: 17,
-    fontWeight: "bold",
-    color: "white",
+    color: "#000000",
+    fontFamily: "Poppins-Regular",
+
   },
   panel: {
     padding: 20,
-    backgroundColor: "#FFFFFF",
-    paddingTop: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 5,
-    shadowOpacity: 0.4,
+    backgroundColor: '#FFFFFF',
+    width:"100%",
   },
-  pannelHeader: {
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#333333",
-    shadowOffset: { width: -1, height: -3 },
-    shadowRadius: 2,
-    shadowOpacity: 0.4,
-    elevation: 5,
-    paddingTop: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
+
 });

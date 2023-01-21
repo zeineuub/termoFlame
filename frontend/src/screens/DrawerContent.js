@@ -29,8 +29,6 @@ export function DrawerContent(props) {
       i18n.translations = { en, fr };
       setTimeout(async () => {
         try {
-          const role = await AsyncStorage.getItem("role");
-          const currentId = await AsyncStorage.getItem("currentId");
           const name = await AsyncStorage.getItem("name");
           const email = await AsyncStorage.getItem("email");
           const language = await AsyncStorage.getItem("user-language");
