@@ -1,5 +1,11 @@
+![npm](https://badgen.net/badge/npm/v4.18.2/green)
+![nodejs](https://img.shields.io/badge/-Node.js-success?logo=nodedotjs&logoColor=black&style=plastic)
+![react-native](https://img.shields.io/badge/-ReactNative-61DAFB?logo=react&logoColor=white&style=plastic)
+![mqtt](https://img.shields.io/badge/-MQTT-660066?logo=mqtt&logoColor=white&style=plastic)
+![version](https://badgen.net/badge/github/1.0.0/red?icon=github)
 
 # TermoFlame
+<p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/termoflame.png"/></p>
 
 ## The goal of this mini project is to achieve:
   1. A connected object based on the "ESP" microcontroller integrated circuit, equipped a temperature sensor and an alphanumeric display.
