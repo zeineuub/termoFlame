@@ -15,13 +15,16 @@ export default function useWeather() {
   const [weather, setWeather] = useState(null);
 
   const latLon = useGeoLocation();
-  useEffect(async() => {
-    await fetchAPI(...latLon);
-   
+  useEffect(() => {
+    if (latLon) {
+      fetchAPI(...latLon);
+    }
+    
   }, [latLon]);
 
   const fetchAPI = async (lat, lon) => {
     try {
+      console.log(lat)
       const endpoint = `/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
       console.log(endpoint)
       const res = await callAPI.get(endpoint);
