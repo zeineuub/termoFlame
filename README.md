@@ -315,4 +315,8 @@ expo start
 cd backend
 npm start
 ```
+### Demo
+
+![demo](https://github.com/zeineuub/termoflame/blob/master/videos/demo1.gif)
+
 
