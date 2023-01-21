@@ -8,7 +8,7 @@
 <p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/logo.png"/></p>
 
 ## The goal of this mini project is to achieve:
-  1. A connected object based on the "ESP" microcontroller integrated circuit, equipped a temperature sensor and an alphanumeric display.
+  1. A connected object based on the "ESP" microcontroller integrated circuit, equipped with a temperature sensor and an alphanumeric display.
   2. Display the data measured by the connected object on a Web type HMI and/or Mobile.
 
 ## Table of Contents 
