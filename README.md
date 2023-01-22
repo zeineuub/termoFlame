@@ -40,6 +40,7 @@ is free and its access details are available on its official page:
 - KeepAlive -> 60
 - Click on 'Connect
 ![Broker](https://github.com/zeineuub/termoflame/blob/master/images/broker.jpg)
+
 ### Subscriptions - Add new Topic fot Temperature and Humidity
 - Topic: topic_sensor_temperature and topic_sensor_humidity
 - QoS: 0
@@ -47,6 +48,7 @@ is free and its access details are available on its official page:
 Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)'s values in the 'Messages' section
 <p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/topics.jpg"/></p>
 ### Simulation code
+link for the [code](https://wokwi.com/projects/350048632305615442?fbclid=IwAR3NLwTKYA4WENQpLlSzD0jtLasedVjtO5wzSh9dVOTMdf07JlgX8qeSGdg)
 
 ```c
 #include <LiquidCrystal_I2C.h>
