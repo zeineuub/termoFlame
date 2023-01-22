@@ -47,6 +47,7 @@ is free and its access details are available on its official page:
 - Click on 'Subscribe'
 Run the simulation on Wokwi and see the ESP32 temperature (°C) and humidity (%)'s values in the 'Messages' section
 <p align="center"> <img src="https://github.com/zeineuub/termoflame/blob/master/images/topics.jpg"/></p>
+
 ### Simulation code
 link for the [code](https://wokwi.com/projects/350048632305615442?fbclid=IwAR3NLwTKYA4WENQpLlSzD0jtLasedVjtO5wzSh9dVOTMdf07JlgX8qeSGdg)
 
